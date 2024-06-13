@@ -1,0 +1,28 @@
+<%- include('partials/header', { title: 'Invite Logs Settings - ' + guild.name, user: user }) %>
+<style>
+    body {
+        background-color: rgb(26, 25, 25);
+        color: white; /* Add this line to set the text color to white */
+    }
+
+    /* CSS to center text horizontally */
+    .footer-text {
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+<form action="/dashboard/<%= guild.id %>/invite-logs" method="POST" class="mt-4">
+    <div class="form-group">
+        <label for="inviteLogsChannelId">Invite Logs Channel:</label>
+        <select id="inviteLogsChannelId" name="inviteLogsChannelId" class="form-control">
+            <% channels.forEach(channel => { %>
+                <option value="<%= channel.id %>" <%= config && config.inviteLogsChannelId === channel.id ? 'selected' : '' %>><%= channel.name %></option>
+            <% }) %>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<a href="/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+<%- include('partials/footer') %>

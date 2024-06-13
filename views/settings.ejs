@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        body {
+            background-color: rgb(26, 25, 25);
+            color: white; /* Add this line to set the text color to white */
+        }
+    
+        /* CSS to center text horizontally */
+        .footer-text {
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - <%= guild.name %></title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Discord Bot Dashboard</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center">Settings for <%= guild.name %></h1>
+        <form action="/dashboard/<%= guild.id %>" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="welcomeMessage">Welcome Message:</label>
+                <input type="text" id="welcomeMessage" name="welcomeMessage" class="form-control" value="<%= config ? config.welcomeMessage : '' %>">
+            </div>
+            <div class="form-group">
+                <label for="welcomeChannelId">Welcome Channel:</label>
+                <select id="welcomeChannelId" name="welcomeChannelId" class="form-control">
+                    <% channels.forEach(channel => { %>
+                        <option value="<%= channel.id %>" <%= config && config.welcomeChannelId === channel.id ? 'selected' : '' %>><%= channel.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        <a href="/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

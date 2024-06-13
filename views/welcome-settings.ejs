@@ -1,0 +1,85 @@
+<%- include('partials/header', { title: 'Settings - ' + guild.name, user: user }) %>
+<style>
+    body {
+        background-color: rgb(26, 25, 25);
+        color: white; /* Add this line to set the text color to white */
+    }
+
+    /* CSS to center text horizontally */
+    .footer-text {
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    /* CSS for the glass theme */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: 5px; /* Adding border radius */
+        width: calc(100% - 20px); /* Making the width slightly wider */
+        padding: 8px 10px; /* Adjusting padding for better appearance */
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-primary {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        border-radius: 5px; /* Adding border radius */
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        border-radius: 5px; /* Adding border radius */
+        transition: background-color 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+</style>
+<form action="/dashboard/<%= guild.id %>/welcome" method="POST" class="mt-4">
+    <div class="form-group">
+        <label for="welcomeMessage">Welcome Message:</label>
+        <input type="text" id="welcomeMessage" name="welcomeMessage" class="form-control" value="<%= config ? config.welcomeMessage : '' %>">
+    </div>
+    <div class="form-group">
+        <label for="welcomeChannelId">Welcome Channel:</label>
+        <select id="welcomeChannelId" name="welcomeChannelId" class="form-control">
+            <% channels.forEach(channel => { %>
+                <option value="<%= channel.id %>" <%= config && config.welcomeChannelId === channel.id ? 'selected' : '' %>><%= channel.name %></option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="welcomeImageUrl">Welcome Image URL:</label>
+        <input type="text" id="welcomeImageUrl" name="welcomeImageUrl" class="form-control" value="<%= config ? config.welcomeImageUrl : '' %>">
+    </div>
+    <div class="form-group">
+        <label for="embedColor">Embed Color:</label>
+        <input type="color" id="embedColor" name="embedColor" class="form-control" value="<%= config ? config.embedColor : '#000000' %>">
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<a href="/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+<%- include('partials/footer') %>
